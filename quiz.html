@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSecurity Awareness Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary: #0a192f; /* Dark navy */
+            --secondary: #172a45; /* Slightly lighter navy */
+            --accent: #64ffda; /* Cyber teal */
+            --light: #e6f1ff; /* Light blue for text */
+            --dark: #020c1b; /* Very dark blue */
+            --danger: #ff5555; /* Brighter red */
+            --success: #50fa7b; /* Brighter green */
+            --warning: #f1fa8c; /* Bright yellow */
+            --form-bg: rgba(255, 255, 255, 0.1); /* Lighter form background */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace, sans-serif;
+            background-color: var(--primary);
+            min-height: 100vh;
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(23, 42, 69, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background: rgba(10, 25, 47, 0.7);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* QR Code Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--secondary);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--accent);
+            max-width: 90%;
+        }
+
+        .modal h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        #qr-code {
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .close-modal {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--form-bg);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(100, 255, 218, 0.2);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(to right, var(--accent), #52d6d6);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 255, 218, 0.4);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-secondary {
+            background: rgba(100, 255, 218, 0.1);
+            box-shadow: none;
+            color: var(--light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(100, 255, 218, 0.2);
+        }
+
+        /* Clear button styles */
+        .clear-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 25px;
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--light);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .clear-btn:hover {
+            background: rgba(100, 255, 218, 0.2);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-3 {
+            margin-top: 15px;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        .link {
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            padding: 30px;
+        }
+
+        .user-greeting {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(100, 255, 218, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+            padding-bottom: 10px;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            padding: 30px;
+        }
+
+        .progress-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(100, 255, 218, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), #52d6d6);
+            border-radius: 5px;
+            transition: width 0.3s;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: var(--light);
+        }
+
+        .options-container {
+            margin-bottom: 30px;
+        }
+
+        .option {
+            display: block;
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        /* Answer feedback styles */
+        .option.correct {
+            background: rgba(80, 250, 123, 0.2);
+            border-color: var(--success);
+        }
+
+        .option.incorrect {
+            background: rgba(255, 85, 85, 0.2);
+            border-color: var(--danger);
+        }
+
+        .option.correct .checkmark {
+            border-color: var(--success);
+        }
+
+        .option.incorrect .checkmark {
+            border-color: var(--danger);
+        }
+
+        .option:hover {
+            background: rgba(100, 255, 218, 0.2);
+        }
+
+        .option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            height: 20px;
+            width: 20px;
+            background-color: rgba(100, 255, 218, 0.1);
+            border-radius: 50%;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+        }
+
+        .option input:checked ~ .checkmark {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .option input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .option .checkmark:after {
+            left: 5px;
+            top: 1px;
+            width: 5px;
+            height: 10px;
+            border: solid var(--dark);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Results Styles */
+        .result-container {
+            padding: 30px;
+        }
+
+        .score-display {
+            font-size: 2rem;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--accent);
+        }
+
+        .correct-answers {
+            color: var(--success);
+        }
+
+        .incorrect-answers {
+            color: var(--danger);
+        }
+
+        .answer-review {
+            margin-top: 30px;
+        }
+
+        .review-item {
+            background: rgba(100, 255, 218, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .review-answer {
+            display: flex;
+            margin-bottom: 5px;
+        }
+
+        .answer-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--accent);
+        }
+
+        .correct {
+            border-left: 4px solid var(--success);
+        }
+
+        .incorrect {
+            border-left: 4px solid var(--danger);
+        }
+
+        /* Leaderboard Styles */
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .leaderboard th {
+            background: rgba(100, 255, 218, 0.1);
+            padding: 12px;
+            text-align: left;
+            color: var(--accent);
+        }
+
+        .leaderboard td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .leaderboard tr:last-child td {
+            border-bottom: none;
+        }
+
+        .leaderboard tr:hover {
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        .rank {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .user-score {
+            font-weight: bold;
+        }
+
+        /* OTP Verification */
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--light);
+        }
+
+        /* Password Input Styles */
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(100, 255, 218, 0.6);
+        }
+
+        .toggle-password:hover {
+            color: var(--accent);
+        }
+
+        /* Error Message Styles */
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            .dashboard-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Cyber Elements */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--accent) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, #ff5555 0%, transparent 20%),
+                radial-gradient(circle at 50% 10%, #50fa7b 0%, transparent 20%);
+        }
+
+        .hacker-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        /* QR Code Button */
+        .qr-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--dark);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.4);
+            z-index: 100;
+            font-size: 1.5rem;
+        }
+
+        .qr-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(100, 255, 218, 0.6);
+        }
+
+        /* Binary animation */
+        .binary-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.03;
+            overflow: hidden;
+        }
+
+        .binary-digit {
+            position: absolute;
+            color: var(--accent);
+            font-family: monospace;
+            font-size: 16px;
+            opacity: 0;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    <div class="binary-animation" id="binary-animation"></div>
+    
+    <!-- QR Code Button -->
+    <div class="qr-btn" onclick="showQRModal()">
+        <i class="fas fa-qrcode"></i>
+    </div>
+    
+    <!-- QR Code Modal -->
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <h2>Scan to Join the Quiz</h2>
+            <div id="qr-code"></div>
+            <p>Scan this QR code with your phone to access the quiz</p>
+            <button class="close-modal" onclick="closeQRModal()">Close</button>
+        </div>
+    </div>
+    
+    <!-- Auth Container -->
+    <div id="auth-container" class="container">
+        <div class="header">
+            <div class="hacker-icon">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <h1>CyberSecurity Awareness Quiz</h1>
+            <p>Test your knowledge and climb the leaderboard</p>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="form-container">
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" class="form-control" placeholder="your@gmail.com" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('login-password', this)"></i>
+                </div>
+            </div>
+            <button onclick="login()" class="btn btn-block">Login</button>
+            <button onclick="clearLoginForm()" class="clear-btn">Clear All Fields</button>
+            <div class="text-center mt-3">
+                <span class="link" onclick="showForgotPassword()">Forgot Password?</span> | 
+                <span class="link" onclick="showRegister()">Create Account</span>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="form-container hidden">
+            <div class="form-group">
+                <label for="register-name">Full Name</label>
+                <input type="text" id="register-name" class="form-control" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="register-username">Username</label>
+                <input type="text" id="register-username" class="form-control" placeholder="johndoe123" required>
+                <div id="username-error" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="register-email">Email</label>
+                <input type="email" id="register-email" class="form-control" placeholder="your@gmail.com" required>
+                <div id="email-error" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="register-mobile">Mobile Number</label>
+                <input type="tel" id="register-mobile" class="form-control" placeholder="+1234567890" required>
+                <div id="mobile-error" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="register-password" class="form-control" placeholder="••••••••" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('register-password', this)"></i>
+                </div>
+                <small class="text-muted">Minimum 8 characters</small>
+                <div id="password-error" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="register-confirm-password">Confirm Password</label>
+                <div class="password-container">
+                    <input type="password" id="register-confirm-password" class="form-control" placeholder="••••••••" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('register-confirm-password', this)"></i>
+                </div>
+                <div id="confirm-password-error" class="error-message"></div>
+            </div>
+            <button onclick="startRegistration()" class="btn btn-block">Register</button>
+            <button onclick="clearRegisterForm()" class="clear-btn">Clear All Fields</button>
+            <div class="text-center mt-3">
+                <span class="link" onclick="showLogin()">Already have an account? Login</span>
+            </div>
+        </div>
+
+        <!-- OTP Verification -->
+        <div id="otp-verification" class="form-container hidden">
+            <div class="text-center">
+                <div class="hacker-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h2>Mobile Verification</h2>
+                <p>We've sent a 6-digit code to your mobile number</p>
+            </div>
+            <div class="otp-container">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+            </div>
+            <button onclick="verifyOTP()" class="btn btn-block">Verify</button>
+            <div class="text-center mt-3">
+                <span class="link" onclick="resendOTP()">Resend Code</span> | 
+                <span class="link" onclick="cancelVerification()">Cancel</span>
+            </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <div id="forgot-password" class="form-container hidden">
+            <div class="text-center">
+                <div class="hacker-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h2>Reset Password</h2>
+                <p>Enter your email and mobile number to receive a reset link</p>
+            </div>
+            <div class="form-group">
+                <label for="reset-email">Email</label>
+                <input type="email" id="reset-email" class="form-control" placeholder="your@gmail.com" required>
+            </div>
+            <div class="form-group">
+                <label for="reset-mobile">Mobile Number</label>
+                <input type="tel" id="reset-mobile" class="form-control" placeholder="+1234567890" required>
+            </div>
+            <button onclick="sendResetLink()" class="btn btn-block">Send Reset Link</button>
+            <div class="text-center mt-3">
+                <span class="link" onclick="showLogin()">Back to Login</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="container hidden">
+        <div class="dashboard">
+            <h1 class="user-greeting">Welcome, <span id="user-greeting"></span></h1>
+            
+            <div class="dashboard-actions">
+                <button onclick="startQuiz()" class="btn">
+                    <i class="fas fa-play"></i> Start Quiz
+                </button>
+                <button onclick="viewScores()" class="btn">
+                    <i class="fas fa-chart-line"></i> My Scores
+                </button>
+                <button onclick="showLeaderboard()" class="btn">
+                    <i class="fas fa-trophy"></i> Leaderboard
+                </button>
+                <button onclick="logout()" class="btn btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            
+            <div id="dashboard-content">
+                <!-- Content will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz -->
+    <div id="quiz" class="container hidden">
+        <div class="quiz-container">
+            <div class="progress-container">
+                <div>Question <span id="current-question">1</span> of <span id="total-questions">3</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="question-text" id="question-text"></div>
+            
+            <div class="options-container" id="options-container"></div>
+            
+            <div class="navigation">
+                <button id="prev-btn" onclick="prevQuestion()" class="btn btn-secondary" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="btn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results -->
+    <div id="result" class="container hidden">
+        <div class="result-container">
+            <div class="text-center">
+                <div class="hacker-icon">
+                    <i class="fas fa-poll"></i>
+                </div>
+                <h2>Quiz Results</h2>
+            </div>
+            
+            <div class="score-display">
+                <span id="score-text">You scored 3/5</span>
+            </div>
+            
+            <div class="answer-review" id="answer-review"></div>
+            
+            <button onclick="returnToDashboard()" class="btn btn-block">
+                <i class="fas fa-home"></i> Return to Dashboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Database simulation
+        const usersDB = JSON.parse(localStorage.getItem('cyberQuizUsers')) || [];
+        const quizResultsDB = JSON.parse(localStorage.getItem('cyberQuizResults')) || [];
+        
+        // Expanded question bank with 20 cybersecurity questions
+        const questionBank = [
+            {
+                question: "What is the primary purpose of a VPN?",
+                options: ["To increase internet speed", "To create a secure connection over the internet", "To block ads on websites"],
+                answer: 1,
+                explanation: "A VPN (Virtual Private Network) creates a secure, encrypted connection between your device and the internet, protecting your data from eavesdroppers."
+            },
+            {
+                question: "Which of these is an example of a strong password?",
+                options: ["password123", "JohnDoe1985", "7$nV2#pQ!9xL"],
+                answer: 2,
+                explanation: "A strong password should be long (at least 12 characters), complex (mix of uppercase, lowercase, numbers, and symbols), and unpredictable."
+            },
+            {
+                question: "What should you do if you receive a suspicious email asking for personal information?",
+                options: ["Reply with the requested information", "Click on links to verify the sender", "Delete it without responding"],
+                answer: 2,
+                explanation: "Never respond to or click links in suspicious emails. Delete them immediately as they're likely phishing attempts."
+            },
+            {
+                question: "What does two-factor authentication (2FA) add to your security?",
+                options: ["A second password", "An additional verification step", "Automatic password changes"],
+                answer: 1,
+                explanation: "2FA adds an extra layer of security by requiring a second verification step (like a code sent to your phone) beyond just a password."
+            },
+            {
+                question: "Which of these is NOT a recommended practice for public Wi-Fi?",
+                options: ["Using a VPN", "Online banking without protection", "Checking email with HTTPS"],
+                answer: 1,
+                explanation: "Public Wi-Fi is often unsecured. Never perform sensitive activities like banking without proper security measures like a VPN."
+            },
+            {
+                question: "What is a common sign that your computer might be infected with malware?",
+                options: ["It runs faster than usual", "Unusual pop-up windows appear frequently", "Your keyboard stops working"],
+                answer: 1,
+                explanation: "Frequent pop-ups, slow performance, and unexpected behavior are common signs of malware infection."
+            },
+            {
+                question: "What is the best way to protect against ransomware?",
+                options: ["Regularly back up important files", "Use a strong password", "Disable your firewall"],
+                answer: 0,
+                explanation: "Regular backups (stored separately) are the best defense against ransomware as you can restore your files without paying."
+            },
+            {
+                question: "What is 'phishing' in cybersecurity?",
+                options: ["A fishing game for hackers", "A type of malware that encrypts files", "Fraudulent attempts to obtain sensitive information"],
+                answer: 2,
+                explanation: "Phishing is when attackers pose as legitimate entities to trick users into revealing sensitive information like passwords."
+            },
+            {
+                question: "Why should you keep your software updated?",
+                options: ["Updates often include security patches", "Updates make your computer look newer", "It's required by law"],
+                answer: 0,
+                explanation: "Software updates often include critical security patches that fix vulnerabilities hackers could exploit."
+            },
+            {
+                question: "What is a 'zero-day' vulnerability?",
+                options: ["A flaw known to the vendor but not yet patched", "A bug that only appears at midnight", "A security issue that can't be fixed"],
+                answer: 0,
+                explanation: "A zero-day is a vulnerability that is unknown to or unaddressed by the vendor, giving them 'zero days' to fix it before potential exploitation."
+            },
+            {
+                question: "What is the purpose of a firewall?",
+                options: ["To block all internet traffic", "To monitor and control incoming/outgoing network traffic", "To speed up internet connections"],
+                answer: 1,
+                explanation: "Firewalls act as barriers between trusted and untrusted networks, controlling traffic based on security rules."
+            },
+            {
+                question: "What is social engineering?",
+                options: ["Building social media apps", "Manipulating people to gain access to systems/information", "A type of computer programming"],
+                answer: 1,
+                explanation: "Social engineering exploits human psychology rather than technical hacking techniques to gain access to systems or information."
+            },
+            {
+                question: "Why is it risky to use the same password for multiple accounts?",
+                options: ["It's harder to remember", "If one account is compromised, all are at risk", "Websites don't allow duplicate passwords"],
+                answer: 1,
+                explanation: "Reusing passwords means a breach on one service could compromise all your accounts using that password."
+            },
+            {
+                question: "What does HTTPS in a website URL indicate?",
+                options: ["The site has high traffic", "The connection is encrypted", "The site is government-approved"],
+                answer: 1,
+                explanation: "HTTPS indicates the connection is encrypted via SSL/TLS, protecting data in transit between your browser and the website."
+            },
+            {
+                question: "What is the principle of least privilege in security?",
+                options: ["Users should have minimal access needed to perform their tasks", "All users should have admin rights", "Privileges should be given based on seniority"],
+                answer: 0,
+                explanation: "This principle limits access rights to only what's strictly required, reducing potential damage from accidents or attacks."
+            },
+            {
+                question: "What is multi-factor authentication (MFA)?",
+                options: ["Using multiple passwords", "Verifying identity through multiple methods", "Having multiple user accounts"],
+                answer: 1,
+                explanation: "MFA requires two or more verification factors (something you know, have, or are) for authentication."
+            },
+            {
+                question: "What is the main risk of clicking on shortened URLs?",
+                options: ["They load slower", "You can't see the actual destination", "They cost money to open"],
+                answer: 1,
+                explanation: "Shortened URLs hide the actual destination, which could be malicious. Always check shortened links before clicking."
+            },
+            {
+                question: "What should you do before disposing of an old computer?",
+                options: ["Throw it in the trash", "Perform a factory reset", "Wipe the hard drive securely"],
+                answer: 2,
+                explanation: "Simply resetting isn't enough. Use secure wipe tools to ensure no sensitive data can be recovered from the drive."
+            },
+            {
+                question: "What is a 'brute force' attack?",
+                options: ["Physically breaking into a server room", "Trying all possible password combinations", "Overwhelming a system with traffic"],
+                answer: 1,
+                explanation: "Brute force attacks systematically try all possible passwords/keys until the correct one is found."
+            },
+            {
+                question: "Why should you be cautious with USB devices you find?",
+                options: ["They might contain malware", "They could be stolen property", "They might be damaged"],
+                answer: 0,
+                explanation: "Malicious USB devices can automatically install malware when plugged in—a tactic called 'USB baiting'."
+            }
+        ];
+
+        // App State
+        let currentUser = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let otpCode = null;
+        let tempUser = null;
+        let currentQuizQuestions = [];
+
+        // DOM Ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize OTP inputs
+            const otpInputs = document.querySelectorAll('.otp-input');
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    if (input.value.length === 1 && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                });
+            });
+            
+            // Form validation listeners
+            document.getElementById('register-username').addEventListener('input', checkUsernameAvailability);
+            document.getElementById('register-email').addEventListener('input', checkEmailAvailability);
+            document.getElementById('register-mobile').addEventListener('input', checkMobileAvailability);
+            document.getElementById('register-password').addEventListener('input', validatePassword);
+            document.getElementById('register-confirm-password').addEventListener('input', validatePassword);
+            
+            // Check for existing session
+            const session = localStorage.getItem('cyberQuizSession');
+            if (session) {
+                const user = usersDB.find(u => u.email === JSON.parse(session).email);
+                if (user) {
+                    currentUser = user;
+                    showDashboard();
+                }
+            }
+
+            // Generate binary animation
+            createBinaryAnimation();
+        });
+
+        // Check if username is available
+        function checkUsernameAvailability() {
+            const username = document.getElementById('register-username').value.trim();
+            const errorElement = document.getElementById('username-error');
+            
+            if (!username) {
+                errorElement.style.display = 'none';
+                return true;
+            }
+            
+            if (usersDB.some(user => user.username && user.username.toLowerCase() === username.toLowerCase())) {
+                errorElement.textContent = "Username already taken";
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // Check if email is available
+        function checkEmailAvailability() {
+            const email = document.getElementById('register-email').value.trim();
+            const errorElement = document.getElementById('email-error');
+            
+            if (!email) {
+                errorElement.style.display = 'none';
+                return true;
+            }
+            
+            if (!email.endsWith('@gmail.com')) {
+                errorElement.textContent = "Please use a Gmail address";
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            if (usersDB.some(user => user.email.toLowerCase() === email.toLowerCase())) {
+                errorElement.textContent = "Email already registered";
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // Check if mobile number is available
+        function checkMobileAvailability() {
+            const mobile = document.getElementById('register-mobile').value.trim();
+            const errorElement = document.getElementById('mobile-error');
+            
+            if (!mobile) {
+                errorElement.style.display = 'none';
+                return true;
+            }
+            
+            if (usersDB.some(user => user.mobile === mobile)) {
+                errorElement.textContent = "Mobile number already registered";
+                errorElement.style.display = 'block';
+                return false;
+            }
+            
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // Create binary animation in background
+        function createBinaryAnimation() {
+            const container = document.getElementById('binary-animation');
+            const digits = '01';
+            const count = 50;
+            
+            for (let i = 0; i < count; i++) {
+                const digit = document.createElement('div');
+                digit.className = 'binary-digit';
+                digit.textContent = digits.charAt(Math.floor(Math.random() * digits.length));
+                digit.style.left = `${Math.random() * 100}%`;
+                digit.style.animationDuration = `${5 + Math.random() * 15}s`;
+                digit.style.animationDelay = `-${Math.random() * 5}s`;
+                container.appendChild(digit);
+            }
+        }
+
+        // QR Code Modal functions
+        function showQRModal() {
+            const modal = document.getElementById('qr-modal');
+            modal.style.display = 'flex';
+            
+            // Generate QR code for the current page URL
+            const currentUrl = window.location.href;
+            QRCode.toCanvas(document.getElementById('qr-code'), currentUrl, {
+                width: 200,
+                color: {
+                    dark: '#64ffda', // Cyber teal
+                    light: '#0a192f' // Dark navy
+                }
+            }, function(error) {
+                if (error) console.error(error);
+            });
+        }
+
+        function closeQRModal() {
+            document.getElementById('qr-modal').style.display = 'none';
+        }
+
+        // Clear form functions
+        function clearLoginForm() {
+            document.getElementById('login-email').value = '';
+            document.getElementById('login-password').value = '';
+        }
+
+        function clearRegisterForm() {
+            document.getElementById('register-name').value = '';
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-email').value = '';
+            document.getElementById('register-mobile').value = '';
+            document.getElementById('register-password').value = '';
+            document.getElementById('register-confirm-password').value = '';
+            
+            // Hide all error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+        }
+
+        // Password visibility toggle
+        function togglePasswordVisibility(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Password validation
+        function validatePassword() {
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const passwordError = document.getElementById('password-error');
+            const confirmError = document.getElementById('confirm-password-error');
+            
+            // Reset errors
+            passwordError.style.display = 'none';
+            confirmError.style.display = 'none';
+            
+            // Check if password is already used by this or another user
+            if (password && usersDB.some(user => user.password === password)) {
+                passwordError.textContent = "This password has been used before. Please choose a different one.";
+                passwordError.style.display = 'block';
+                return false;
+            }
+            
+            // Validate password strength
+            if (password.length > 0 && password.length < 8) {
+                passwordError.textContent = "Password must be at least 8 characters";
+                passwordError.style.display = 'block';
+                return false;
+            }
+            
+            // Check if passwords match
+            if (password && confirmPassword && password !== confirmPassword) {
+                confirmError.textContent = "Passwords do not match";
+                confirmError.style.display = 'block';
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Auth Functions
+        function showLogin() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('otp-verification').classList.add('hidden');
+            document.getElementById('forgot-password').classList.add('hidden');
+        }
+
+        function showRegister() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+            document.getElementById('otp-verification').classList.add('hidden');
+            document.getElementById('forgot-password').classList.add('hidden');
+        }
+
+        function showForgotPassword() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('otp-verification').classList.add('hidden');
+            document.getElementById('forgot-password').classList.remove('hidden');
+        }
+
+        function startRegistration() {
+            const name = document.getElementById('register-name').value.trim();
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const mobile = document.getElementById('register-mobile').value.trim();
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+
+            // Validation
+            if (!name || !username || !email || !mobile || !password || !confirmPassword) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            // Check unique fields
+            if (!checkUsernameAvailability() || !checkEmailAvailability() || !checkMobileAvailability()) {
+                return;
+            }
+
+            if (!email.endsWith('@gmail.com')) {
+                alert("Please use a Gmail address for registration");
+                return;
+            }
+
+            if (!validatePassword()) {
+                return;
+            }
+
+            // Store temp user and show OTP verification
+            tempUser = { name, username, email, mobile, password };
+            generateOTP();
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('otp-verification').classList.remove('hidden');
+        }
+
+        function generateOTP() {
+            // In a real app, this would be sent to the user's mobile
+            otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+            console.log("Generated OTP (for demo purposes):", otpCode); // Remove in production
+            alert(`OTP sent to your mobile: ${otpCode}`); // Demo only
+        }
+
+        function verifyOTP() {
+            const otpInputs = document.querySelectorAll('.otp-input');
+            let enteredOTP = '';
+            otpInputs.forEach(input => enteredOTP += input.value);
+
+            if (enteredOTP === otpCode) {
+                // Register the user
+                usersDB.push(tempUser);
+                localStorage.setItem('cyberQuizUsers', JSON.stringify(usersDB));
+                
+                // Log them in
+                currentUser = tempUser;
+                localStorage.setItem('cyberQuizSession', JSON.stringify({ email: currentUser.email }));
+                
+                showDashboard();
+                alert("Registration successful! Welcome to CyberSecurity Master.");
+            } else {
+                alert("Invalid OTP. Please try again.");
+            }
+        }
+
+        function resendOTP() {
+            generateOTP();
+            alert("New OTP sent to your mobile.");
+        }
+
+        function cancelVerification() {
+            tempUser = null;
+            otpCode = null;
+            showRegister();
+        }
+
+        function login() {
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            const user = usersDB.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('cyberQuizSession', JSON.stringify({ email: currentUser.email }));
+                showDashboard();
+            } else {
+                alert("Invalid email or password");
+            }
+        }
+
+        function sendResetLink() {
+            const email = document.getElementById('reset-email').value.trim();
+            const mobile = document.getElementById('reset-mobile').value.trim();
+            
+            if (!email || !mobile) {
+                alert("Please enter both email and mobile number");
+                return;
+            }
+            
+            const user = usersDB.find(user => user.email === email && user.mobile === mobile);
+            
+            if (!user) {
+                alert("No account found with that email and mobile number combination");
+                return;
+            }
+            
+            // In a real app, this would send a reset link to the user's email
+            alert(`Password reset link sent to ${email} (simulated for this demo)`);
+            showLogin();
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('cyberQuizSession');
+            document.getElementById('auth-container').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            showLogin();
+        }
+
+        // Dashboard Functions
+        function showDashboard() {
+            document.getElementById('auth-container').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('result').classList.add('hidden');
+            
+            document.getElementById('user-greeting').textContent = currentUser.name;
+            loadDashboardContent();
+        }
+
+        function loadDashboardContent() {
+            const dashboardContent = document.getElementById('dashboard-content');
+            dashboardContent.innerHTML = `
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-info-circle"></i> Quick Stats</h3>
+                    <p>Total Quizzes Taken: ${getUserQuizCount()}</p>
+                    <p>Highest Score: ${getUserHighScore()}/${currentQuizQuestions.length || questionBank.length}</p>
+                    <p>Average Score: ${getUserAverageScore().toFixed(1)}/${currentQuizQuestions.length || questionBank.length}</p>
+                </div>
+            `;
+        }
+
+        function getUserQuizCount() {
+            return quizResultsDB.filter(result => result.userId === currentUser.email).length;
+        }
+
+        function getUserHighScore() {
+            const userResults = quizResultsDB.filter(result => result.userId === currentUser.email);
+            if (userResults.length === 0) return 0;
+            return Math.max(...userResults.map(result => result.score));
+        }
+
+        function getUserAverageScore() {
+            const userResults = quizResultsDB.filter(result => result.userId === currentUser.email);
+            if (userResults.length === 0) return 0;
+            return userResults.reduce((sum, result) => sum + result.score, 0) / userResults.length;
+        }
+
+        function viewScores() {
+            const userResults = quizResultsDB.filter(result => result.userId === currentUser.email)
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            let scoresHtml = `
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-history"></i> Your Quiz History</h3>
+            `;
+            
+            if (userResults.length === 0) {
+                scoresHtml += `<p>You haven't completed any quizzes yet.</p>`;
+            } else {
+                scoresHtml += `<table class="leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Score</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                
+                userResults.forEach((result, index) => {
+                    const date = new Date(result.date).toLocaleString();
+                    scoresHtml += `
+                        <tr>
+                            <td>${date}</td>
+                            <td>${result.score}/${result.totalQuestions}</td>
+                            <td><button onclick="viewQuizDetails('${result.id}')" class="btn btn-secondary">View</button></td>
+                        </tr>
+                    `;
+                });
+                
+                scoresHtml += `</tbody></table>`;
+            }
+            
+            scoresHtml += `</div>`;
+            
+            document.getElementById('dashboard-content').innerHTML = scoresHtml;
+        }
+
+        function showLeaderboard() {
+            // Group results by user and get their highest scores
+            const leaderboardData = [];
+            
+            usersDB.forEach(user => {
+                const userResults = quizResultsDB.filter(result => result.userId === user.email);
+                if (userResults.length > 0) {
+                    const highestScore = Math.max(...userResults.map(result => result.score));
+                    const totalQuizzes = userResults.length;
+                    const latestDate = new Date(Math.max(...userResults.map(result => new Date(result.date))));
+                    
+                    leaderboardData.push({
+                        name: user.name,
+                        email: user.email,
+                        score: highestScore,
+                        totalQuizzes,
+                        latestDate
+                    });
+                }
+            });
+            
+            // Sort by score (descending) and then by date (newest first)
+            leaderboardData.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return b.latestDate - a.latestDate;
+            });
+            
+            let leaderboardHtml = `
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-trophy"></i> Leaderboard</h3>
+            `;
+            
+            if (leaderboardData.length === 0) {
+                leaderboardHtml += `<p>No quiz results available yet.</p>`;
+            } else {
+                leaderboardHtml += `
+                    <table class="leaderboard">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>High Score</th>
+                                <th>Quizzes Taken</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                leaderboardData.forEach((user, index) => {
+                    leaderboardHtml += `
+                        <tr ${user.email === currentUser.email ? 'style="background: rgba(100, 255, 218, 0.1);"' : ''}>
+                            <td class="rank">${index + 1}</td>
+                            <td>${user.name} ${user.email === currentUser.email ? '(You)' : ''}</td>
+                            <td class="user-score">${user.score}/${currentQuizQuestions.length || questionBank.length}</td>
+                            <td>${user.totalQuizzes}</td>
+                        </tr>
+                    `;
+                });
+                
+                leaderboardHtml += `</tbody></table>`;
+            }
+            
+            leaderboardHtml += `</div>`;
+            
+            document.getElementById('dashboard-content').innerHTML = leaderboardHtml;
+        }
+
+        function viewQuizDetails(resultId) {
+            const result = quizResultsDB.find(r => r.id === resultId);
+            if (!result) return;
+            
+            let detailsHtml = `
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-poll"></i> Quiz Details</h3>
+                    <p><strong>Date:</strong> ${new Date(result.date).toLocaleString()}</p>
+                    <p><strong>Score:</strong> ${result.score}/${result.totalQuestions}</p>
+                    
+                    <h4 class="mt-3">Question Review:</h4>
+            `;
+            
+            result.questions.forEach((q, index) => {
+                const isCorrect = q.userAnswer === q.correctAnswer;
+                
+                detailsHtml += `
+                    <div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="review-question">${index + 1}. ${q.question}</div>
+                        <div class="review-answer">
+                            <span class="answer-label">Your Answer:</span>
+                            <span>${q.options[q.userAnswer]} ${isCorrect ? '✓' : '✗'}</span>
+                        </div>
+                        ${!isCorrect ? `
+                        <div class="review-answer">
+                            <span class="answer-label">Correct Answer:</span>
+                            <span>${q.options[q.correctAnswer]}</span>
+                        </div>
+                        ` : ''}
+                        <div class="review-answer">
+                            <span class="answer-label">Explanation:</span>
+                            <span>${q.explanation}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            detailsHtml += `</div>`;
+            
+            document.getElementById('dashboard-content').innerHTML = detailsHtml;
+        }
+
+        // Quiz Functions
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            
+            // Select 15 random questions from the bank
+            currentQuizQuestions = getRandomQuestions(15);
+            userAnswers = Array(currentQuizQuestions.length).fill(null);
+            
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+            
+            document.getElementById('total-questions').textContent = currentQuizQuestions.length;
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // Function to get random questions from the question bank
+        function getRandomQuestions(count) {
+            // Make a copy of the question bank
+            const shuffled = [...questionBank];
+            
+            // Fisher-Yates shuffle algorithm
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            // Return the first 'count' questions
+            return shuffled.slice(0, count);
+        }
+
+        function loadQuestion(index) {
+            const question = currentQuizQuestions[index];
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('current-question').textContent = index + 1;
+            
+            // Update progress bar
+            const progressPercent = ((index + 1) / currentQuizQuestions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, i) => {
+                const optionElement = document.createElement('label');
+                optionElement.className = 'option';
+                
+                // Add correct/incorrect class if reviewing answers
+                if (typeof userAnswers[index] === 'number' && i === question.answer) {
+                    optionElement.classList.add('correct');
+                } else if (typeof userAnswers[index] === 'number' && userAnswers[index] === i && userAnswers[index] !== question.answer) {
+                    optionElement.classList.add('incorrect');
+                }
+                
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'question';
+                radio.value = i;
+                if (userAnswers[index] === i) {
+                    radio.checked = true;
+                }
+                
+                const checkmark = document.createElement('span');
+                checkmark.className = 'checkmark';
+                
+                optionElement.appendChild(radio);
+                optionElement.appendChild(checkmark);
+                optionElement.appendChild(document.createTextNode(option));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').textContent = index === currentQuizQuestions.length - 1 ? 'Submit' : 'Next';
+        }
+
+        function saveAnswer(index) {
+            const selectedOption = document.querySelector(`input[name="question"]:checked`);
+            if (selectedOption) {
+                userAnswers[index] = parseInt(selectedOption.value);
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                saveAnswer(currentQuestionIndex);
+                currentQuestionIndex--;
+                loadQuestion(currentQuestionIndex);
+            }
+        }
+
+        function nextQuestion() {
+            saveAnswer(currentQuestionIndex);
+            
+            if (currentQuestionIndex < currentQuizQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion(currentQuestionIndex);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function submitQuiz() {
+            saveAnswer(currentQuestionIndex);
+            
+            // Calculate score
+            let score = 0;
+            const quizQuestions = [];
+            
+            currentQuizQuestions.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.answer;
+                if (isCorrect) score++;
+                
+                quizQuestions.push({
+                    question: q.question,
+                    options: q.options,
+                    userAnswer: userAnswers[index] !== null ? userAnswers[index] : -1,
+                    correctAnswer: q.answer,
+                    explanation: q.explanation
+                });
+            });
+            
+            // Save result
+            const quizResult = {
+                id: Date.now().toString(),
+                userId: currentUser.email,
+                userName: currentUser.name,
+                score: score,
+                totalQuestions: currentQuizQuestions.length,
+                date: new Date().toISOString(),
+                questions: quizQuestions
+            };
+            
+            quizResultsDB.push(quizResult);
+            localStorage.setItem('cyberQuizResults', JSON.stringify(quizResultsDB));
+            
+            showResults(quizResult);
+        }
+
+        function showResults(result) {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+            
+            document.getElementById('score-text').textContent = 
+                `You scored ${result.score}/${result.totalQuestions}`;
+            
+            const answerReview = document.getElementById('answer-review');
+            answerReview.innerHTML = '';
+            
+            result.questions.forEach((q, index) => {
+                const isCorrect = q.userAnswer === q.correctAnswer;
+                const questionElement = document.createElement('div');
+                questionElement.className = `review-item ${isCorrect ? 'correct' : 'incorrect'}`;
+                
+                questionElement.innerHTML = `
+                    <div class="review-question">${index + 1}. ${q.question}</div>
+                    <div class="review-answer">
+                        <span class="answer-label">Your Answer:</span>
+                        <span>${q.userAnswer !== -1 ? q.options[q.userAnswer] : 'Not answered'} ${isCorrect ? '✓' : '✗'}</span>
+                    </div>
+                    ${!isCorrect ? `
+                    <div class="review-answer">
+                        <span class="answer-label">Correct Answer:</span>
+                        <span>${q.options[q.correctAnswer]}</span>
+                    </div>
+                    ` : ''}
+                    <div class="review-answer">
+                        <span class="answer-label">Explanation:</span>
+                        <span>${q.explanation}</span>
+                    </div>
+                `;
+                
+                answerReview.appendChild(questionElement);
+            });
+        }
+
+        function returnToDashboard() {
+            document.getElementById('result').classList.add('hidden');
+            showDashboard();
+        }
+    </script>
+</body>
+</html>
